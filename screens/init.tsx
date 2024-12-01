@@ -39,17 +39,17 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
 
       const cardData = {
-        firstName: '',
-        lastname: '',
-        email: '',
-        number: '',
-        bio: '',
+        firstName,
+        lastName,
+        email,
+        number,
+        bio,
       };
 
       const ndefMessage = Ndef.encodeMessage([Ndef.textRecord(JSON.stringify(cardData))]);
       await NfcManager.ndefHandler.writeNdefMessage(ndefMessage);
 
-      setModalMessage(`Carta inizializzata: ${cardData.firstName} ${cardData.lastname}`);
+      setModalMessage(`Carta inizializzata: ${cardData.firstName} ${cardData.lastName}`);
       setIsActionModalVisible(true);
     } catch (ex) {
       console.warn(ex);
@@ -58,7 +58,6 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     } finally {
       NfcManager.cancelTechnologyRequest();
       setIsModalVisible(false);
-      navigation.navigate('Home');
     }
   };
 
