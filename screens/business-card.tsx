@@ -18,7 +18,6 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [tag, setTag] = useState<any>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isScanning] = useState(false);
-  /* const [isButtonDisabled, setIsButtonDisabled] = useState(false); */
   const [modalMessage, setModalMessage] = useState('');
   const [isActionModalVisible, setIsActionModalVisible] = useState(false);
 
@@ -39,15 +38,19 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         let cardData;
         try {
           cardData = JSON.parse(text);
+        } catch (e) {
+          throw new Error('Carta non inizializzata');
         }
-        catch (e){ throw new Error('Carta non inizializzata'); }
 
-        if(!cardData.balance || !cardData.cardHolder){ throw new Error('Carta non inizializzata'); }
+        if (!cardData.firstName || !cardData.lastName || !cardData.email || !cardData.number || !cardData.bio) {
+          throw new Error('Carta non inizializzata');
+        }
 
         // Gestisci i dati della carta come necessario
         setTag(cardData);
+      } else {
+        throw new Error('Carta non inizializzata');
       }
-      else{ throw new Error('Carta non inizializzata'); }
     } catch (ex) {
       console.warn(ex);
       if (ex instanceof Error && ex.message === 'Carta non inizializzata') {
@@ -127,10 +130,10 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
           <View style={styles.card}>
             <View style={styles.pfp}> <Text style={styles.pfpText}> JD </Text> </View>
-            <Text style={styles.name}>{tag?.name || 'Name Surname'}</Text>
+            <Text style={styles.name}>{tag?.firstName + ' ' + tag?.lastName || 'Name Surname'}</Text>
             <Text style={styles.job}>Junior Developer and High School Student</Text>
-            <Text style={styles.email}>E-mail: email@mail.com</Text>
-            <Text style={styles.phone}>Telephone Number: +39 000 0000 000</Text>
+            <Text style={styles.email}>{'Email:' + tag?.email || 'E-mail: email@mail.com'}</Text>
+            <Text style={styles.phone}>{tag?.number || 'Telephone Number: +39 000 0000 000'}</Text>
           </View>
 
           <View style={styles.linksContainer}>

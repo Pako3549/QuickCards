@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   arrow: {position: 'absolute', left: 20, top: '50%', transform: [{ translateY: -5 }]},
   main: {height: '95%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingTop: 75},
-  
+
   linksTitle: {margin: 15, fontSize: 35, fontWeight: 'bold', textAlign: 'center', color: 'white'},
   input: {
     width: 300,
