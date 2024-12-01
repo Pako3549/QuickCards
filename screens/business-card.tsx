@@ -129,11 +129,11 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <View style={styles.main}>
 
           <View style={styles.card}>
-            <View style={styles.pfp}> <Text style={styles.pfpText}> JD </Text> </View>
-            <Text style={styles.name}>{tag?.firstName + ' ' + tag?.lastName || 'Name Surname'}</Text>
+            <View style={styles.pfp}> <Text style={styles.pfpText}> { tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0) || ':D' } </Text> </View>
+            <Text style={styles.name}>{ (tag?.firstName + ' ' + tag?.lastName) || 'Name Surname' }</Text>
             <Text style={styles.job}>Junior Developer and High School Student</Text>
-            <Text style={styles.email}>{'Email:' + tag?.email || 'E-mail: email@mail.com'}</Text>
-            <Text style={styles.phone}>{tag?.number || 'Telephone Number: +39 000 0000 000'}</Text>
+            <Text style={styles.email}>E-mail: { tag?.email || 'unset' }</Text>
+            <Text style={styles.phone}>Telephone Number: { tag?.number || 'unset' }</Text>
           </View>
 
           <View style={styles.linksContainer}>
@@ -203,9 +203,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#789DBC',
   },
   pfpText: {fontSize: 50, fontWeight: 'bold', textAlign: 'center', color: 'white'},
-  name: {marginTop: 25, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
+  name: {marginTop: 50, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
   job: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
-  email: {maxWidth: '75%', fontSize: 17, textAlign: 'right', color: 'white'},
+  email: {fontSize: 17, textAlign: 'right', color: 'white'},
   phone: {fontSize: 17, textAlign: 'right', color: 'white'},
   linksContainer: {
     width: 350,
