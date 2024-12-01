@@ -130,7 +130,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
           <View style={styles.card}>
             <View style={styles.pfp}> <Text style={styles.pfpText}> { tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0) || ':D' } </Text> </View>
-            <Text style={styles.name}>{ (tag?.firstName + ' ' + tag?.lastName) || 'Name Surname' }</Text>
+            <Text style={styles.name}>{ tag ? (tag?.firstName + ' ' + tag?.lastName) : 'Name Surname' }</Text>
             <Text style={styles.job}>Junior Developer and High School Student</Text>
             <Text style={styles.email}>E-mail: { tag?.email || 'unset' }</Text>
             <Text style={styles.phone}>Telephone Number: { tag?.number || 'unset' }</Text>
