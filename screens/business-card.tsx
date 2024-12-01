@@ -118,20 +118,35 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
+        <BackArrow style={styles.arrow} width={25} height={25} />
+      </TouchableOpacity>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
-          <BackArrow style={styles.arrow} width={25} height={25} />
-        </TouchableOpacity>
 
-        <View style={styles.card}>
-          <View style={styles.upper}>
-            <Text style={styles.name}> {tag?.cardHolder || 'Nome Cognome'} </Text>
+        <View style={styles.main}>
+
+          <View style={styles.card}>
+            <View style={styles.pfp}> <Text style={styles.pfpText}> JD </Text> </View>
+            <Text style={styles.name}>{tag?.name || 'Name Surname'}</Text>
+            <Text style={styles.job}>Junior Developer and High School Student</Text>
+            <Text style={styles.email}>E-mail: email@mail.com</Text>
+            <Text style={styles.phone}>Telephone Number: +39 000 0000 000</Text>
           </View>
-          <View style={styles.lower}>
-            <Text style={styles.balance}> {tag?.balance || '0.00'} </Text>
+
+          <View style={styles.linksContainer}>
+            <Text style={styles.linksTitle}> LINKS </Text>
+            <View style={styles.links}>
+              <TouchableOpacity style={styles.link} />
+              <TouchableOpacity style={styles.link} />
+              <TouchableOpacity style={styles.link} />
+            </View>
           </View>
+
         </View>
+
       </ScrollView>
+
+
       <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
         <View style={styles.modalContainer}>
           <ScanCard style={styles.image} />
@@ -142,7 +157,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <Text style={styles.modalText}>{modalMessage}</Text>
         {modalMessage === 'La carta non è ancora stata inizializzata' ? (
           <TouchableOpacity style={styles.modalBtn} onPress={navigateToInitScreen}>
-            <Text style={styles.modalBtnText}>Inizializza</Text>
+            <Text style={[styles.modalBtnText, styles.initializeBtn]}> Inizializza </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.modalBtn} onPress={() => setIsActionModalVisible(false)}>
@@ -157,115 +172,59 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {flex: 1, alignItems: 'center', backgroundColor: '#010101'},
-
-
   header: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 40,
-    marginBottom: 5,
     paddingHorizontal: 20,
   },
-  title: {
-    width: '100%',
-    paddingTop: 50,
-    color: 'black',
-    fontSize: 35,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  arrow: {position: 'absolute', left: 20, top: '50%', transform: [{ translateY: -5 }]},
+  main: {height: '95%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingTop: 100},
+  sectionContainer: {marginTop: 30, marginHorizontal: 25},
+  card: {
+    width: 350,
+    alignItems: 'flex-end',
+    marginVertical: 25,
+    padding: 25,
+    borderRadius: 10,
+    backgroundColor: '#222',
   },
-  arrow: {
+  pfp: {
+    width: 100, height: 100,
     position: 'absolute',
-    left: 20,
-    top: '50%',
-    transform: [{ translateY: -5 }],
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  btn: {
-    padding: 10,
-    borderRadius: 5,
+    top: -50, left: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    borderRadius: '100%',
+    backgroundColor: '#789DBC',
   },
-  textWhite: {
-    color: 'white',
-  },
-  tagContainer: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'lightgray',
-    borderRadius: 5,
-  },
-  tagText: {
-    color: 'black',
-  },
-  errorContainer: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'pink',
-    borderRadius: 5,
-  },
-  errorText: {
-    color: 'red',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-  },
-
-  card: {
-    backgroundColor: '#fff',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    margin: 20,
-    marginTop: 25,
-    padding: 15,
-    borderRadius: 15,
-    elevation: 4,         // Android
-    shadowColor: '#000',  // IOS
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 3 },
-  },
-  upper: {
-    width: '100%',
-    height: 75,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  pfpText: {fontSize: 50, fontWeight: 'bold', textAlign: 'center', color: 'white'},
+  name: {marginTop: 25, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
+  job: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
+  email: {maxWidth: '75%', fontSize: 17, textAlign: 'right', color: 'white'},
+  phone: {fontSize: 17, textAlign: 'right', color: 'white'},
+  linksContainer: {
+    width: 350,
     alignItems: 'center',
+    marginVertical: 25,
+    padding: 25,
+    borderRadius: 10,
+    backgroundColor: '#222',
   },
-  lower: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginTop: 75,
-  },
-  name: {fontSize: 16, fontWeight: 'bold', color: '#0D7C66'},
-  balance: {fontSize: 50, fontWeight: 'bold', color: '#f2a900'},
-
-
-
-
+  linksTitle: {fontSize: 25, fontWeight: 'bold', textAlign: 'center', color: 'white'},
+  links: {flexDirection: 'row', flexWrap: 'wrap', marginTop: 25},
+  link: {width: 75, height: 75, margin: 12, borderRadius: '100%', backgroundColor: '#789DBC'},
   modalContainer: {
     width: '100%', height: '100%',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
     backgroundColor: '#010101',
   },
   modalText: {marginBottom: 20, fontSize: 20, fontWeight: 'bold', color: 'white'},
   modalBtn: {paddingVertical: 10, paddingHorizontal: 15, borderRadius: 10, backgroundColor: '#789DBC'},
+  initializeBtn: {width: 100},
   modalBtnText: {width: 50, fontSize: 18, textAlign: 'center', color: 'white'},
   image: {marginVertical: 50},
 });
