@@ -18,7 +18,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [tag, setTag] = useState<any>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isScanning] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  /* const [isButtonDisabled, setIsButtonDisabled] = useState(false); */
   const [modalMessage, setModalMessage] = useState('');
   const [isActionModalVisible, setIsActionModalVisible] = useState(false);
 
@@ -117,68 +117,46 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }
 
   return (
-<SafeAreaView style={styles.container}>
-  <ScrollView contentInsetAdjustmentBehavior="automatic">
-  <TouchableOpacity style={styles.header} onPress={() => {
-    if (!isButtonDisabled) {
-      setIsButtonDisabled(true);
-      NfcManager.cancelTechnologyRequest()
-        .then(() => {
-          navigation.goBack();
-        })
-        .catch(() => {
-          navigation.goBack();
-        })
-        .finally(() => {
-          setIsButtonDisabled(false);
-        });
-    }
-  }} disabled={isButtonDisabled} >
-    <BackArrow style={styles.arrow} width={25} height={25} />
-    </TouchableOpacity>
-    <View style={styles.card}>
-      <View style={styles.upper}>
-        <Text style={styles.name}> {tag?.cardHolder || 'Nome Cognome'} </Text>
-      </View>
-      <View style={styles.lower}>
-        <Text style={styles.balance}> {tag?.balance || '0.00'} </Text>
-      </View>
-    </View>
-  </ScrollView>
-  <Modal
-    animationType="slide"
-    transparent={true}
-    visible={isModalVisible}
-    onRequestClose={() => setIsModalVisible(false)}
-  >
-    <View style={styles.modalContainer}>
-      <View style={styles.modalContent}>
-        <ScanCard style={styles.image} />
-      </View>
-    </View>
-  </Modal>
-  <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
-  <View style={styles.modalContainer}>
-    <View style={styles.modalContent}>
-      <Text style={styles.modalText}>{modalMessage}</Text>
-      {modalMessage === 'La carta non è ancora stata inizializzata' ? (
-        <TouchableOpacity style={styles.closeButton} onPress={navigateToInitScreen}>
-          <Text style={styles.closeButtonText}>Inizializza</Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
+          <BackArrow style={styles.arrow} width={25} height={25} />
         </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={styles.closeButton} onPress={() => setIsActionModalVisible(false)}>
-          <Text style={styles.closeButtonText}>OK</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  </View>
-</Modal>
-</SafeAreaView>
+
+        <View style={styles.card}>
+          <View style={styles.upper}>
+            <Text style={styles.name}> {tag?.cardHolder || 'Nome Cognome'} </Text>
+          </View>
+          <View style={styles.lower}>
+            <Text style={styles.balance}> {tag?.balance || '0.00'} </Text>
+          </View>
+        </View>
+      </ScrollView>
+      <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
+        <View style={styles.modalContainer}>
+          <ScanCard style={styles.image} />
+        </View>
+      </Modal>
+      <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalText}>{modalMessage}</Text>
+        {modalMessage === 'La carta non è ancora stata inizializzata' ? (
+          <TouchableOpacity style={styles.modalBtn} onPress={navigateToInitScreen}>
+            <Text style={styles.modalBtnText}>Inizializza</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.modalBtn} onPress={() => setIsActionModalVisible(false)}>
+            <Text style={styles.modalBtnText}>OK</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </Modal>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, alignItems: 'center', backgroundColor: '#010101'},
 
 
   header: {
@@ -242,43 +220,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '100%',
-    height: '100%',
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalText: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: 'black',
-  },
-  closeButton: {
-    backgroundColor: '#0D7C66',
-    padding: 10,
-    borderRadius: 10,
-  },
-  closeButtonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  image: {
-    marginBottom: 50,
-    marginTop: 50,
-  },
+
   card: {
     backgroundColor: '#fff',
     display: 'flex',
@@ -311,6 +253,21 @@ const styles = StyleSheet.create({
   },
   name: {fontSize: 16, fontWeight: 'bold', color: '#0D7C66'},
   balance: {fontSize: 50, fontWeight: 'bold', color: '#f2a900'},
+
+
+
+
+  modalContainer: {
+    width: '100%', height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#010101',
+  },
+  modalText: {marginBottom: 20, fontSize: 20, fontWeight: 'bold', color: 'white'},
+  modalBtn: {paddingVertical: 10, paddingHorizontal: 15, borderRadius: 10, backgroundColor: '#789DBC'},
+  modalBtnText: {width: 50, fontSize: 18, textAlign: 'center', color: 'white'},
+  image: {marginVertical: 50},
 });
 
 export default BusinessCardScreen;

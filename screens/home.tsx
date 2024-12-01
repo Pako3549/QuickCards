@@ -40,12 +40,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
 
-      <TouchableOpacity onPress={() => { NfcManager.cancelTechnologyRequest(); navigation.navigate('BusinessCard'); }}>
-        <Text>Go to your own business card</Text>
+      <Text style={styles.title}> QuickCards </Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => { NfcManager.cancelTechnologyRequest(); navigation.navigate('BusinessCard'); }}>
+        <Text style={styles.buttonText}> Scan a business card </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {NfcManager.cancelTechnologyRequest(); navigation.navigate('Init'); }}>
-        <Text>Set up your own business card</Text>
+      <TouchableOpacity style={styles.button} onPress={() => {NfcManager.cancelTechnologyRequest(); navigation.navigate('Init'); }}>
+        <Text style={styles.buttonText}> Set up your own business card </Text>
       </TouchableOpacity>
 
     </View>
@@ -53,29 +55,18 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 50,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  header: {
-    width: '100%',
+  container: {flex: 1, alignItems: 'center', paddingTop: 150, backgroundColor: '#010101'},
+  title: {marginBottom: 150, fontSize: 50, fontWeight: 'bold', color: 'white'},
+  button: {
+    width: 300, height: 125,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 25,
+    borderRadius: 10,
+    backgroundColor: '#222',
   },
-  image: {marginTop: 50, marginBottom: 50},
-  greeting: {
-    marginTop: -25,
-    marginBottom: 75,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#0D7C66',
-  },
-  button: {width: 300, height: 50, marginBottom: 15},
+  buttonText: {width: '75%', fontSize: 25, fontWeight: 'bold', textAlign: 'center', color: 'white'},
 });
 
 export default HomeScreen;

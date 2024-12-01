@@ -68,15 +68,15 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <BackArrow style={styles.arrow} width={25} height={25} />
       </TouchableOpacity>
       <View style={styles.main}>
-        <Text style={styles.title}> Inizializza carta </Text>
+        {/* <Text style={styles.title}> Inizializza carta </Text> */}
         <View>
-          <TextInput style={styles.input} placeholder="Nome" value={firstName} onChangeText={setFirstName} keyboardType="default" placeholderTextColor="#AAA" />
+          <TextInput style={styles.input} placeholder="Name" value={firstName} onChangeText={setFirstName} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
-          <TextInput style={styles.input} placeholder="Cognome" value={lastName} onChangeText={setLastName} keyboardType="default" placeholderTextColor="#AAA" />
+          <TextInput style={styles.input} placeholder="Surname" value={lastName} onChangeText={setLastName} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
-          <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} keyboardType="default" placeholderTextColor="#AAA" />
+          <TextInput style={styles.input} placeholder="E-mail" value={email} onChangeText={setEmail} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
           <TextInput style={styles.input} placeholder="Telephone Number" value={number} onChangeText={setNumber} keyboardType="numeric" placeholderTextColor="#AAA" />
@@ -84,25 +84,30 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <View>
           <TextInput style={styles.input} placeholder="Bio" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleWriteCard}>
-          <Text style={styles.buttonText}>Inizializza</Text>
+
+        <Text style={styles.linksTitle}> Links </Text>
+
+        <TextInput style={styles.input} placeholder="Link" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
+        <TextInput style={styles.input} placeholder="Link" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
+        <TextInput style={styles.input} placeholder="Link" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
+
+        <TouchableOpacity style={styles.setUpBtn} onPress={handleWriteCard}>
+          <Text style={styles.setUpBtnText}> Set up </Text>
         </TouchableOpacity>
       </View>
+
+
       <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <ScanCard style={styles.image} />
-          </View>
+          <ScanCard style={styles.image} />
         </View>
       </Modal>
       <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{modalMessage}</Text>
-            <TouchableOpacity style={styles.closeButton} onPress={() => {setIsActionModalVisible(false); navigation.navigate('Home');}}>
-              <Text style={styles.closeButtonText}>OK</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.modalText}>{modalMessage}</Text>
+          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); navigation.navigate('Home');}}>
+            <Text style={styles.modalBtnText}>OK</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
@@ -110,102 +115,52 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#fff',
-  },
+  container: {flex: 1, alignItems: 'center', backgroundColor: '#010101'},
   header: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 40,
-    marginBottom: 5,
     paddingHorizontal: 20,
   },
-  arrow: {
-    position: 'absolute',
-    left: 20,
-    top: '50%',
-    transform: [{ translateY: -5 }],
-  },
-  main: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 150,
-  },
-  title: {
-    width: '100%',
-    paddingBottom: 25,
-    color: 'black',
-    fontSize: 35,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+  arrow: {position: 'absolute', left: 20, top: '50%', transform: [{ translateY: -5 }]},
+  main: {height: '95%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingTop: 75},
+  linksTitle: {margin: 15, fontSize: 35, fontWeight: 'bold', textAlign: 'center', color: 'white'},
   input: {
     width: 300,
     height: 50,
-    backgroundColor: '#eee',
-    color: '#000',
+    color: 'white',
     borderRadius: 10,
     marginBottom: 12,
-    paddingLeft: 50,
+    paddingLeft: 20,
     paddingHorizontal: 8,
+    backgroundColor: '#222',
   },
   icon: {position: 'absolute', top: 13, left: 13},
-  button: {
-    width: '45%', height: 50,
+
+  setUpBtn: {
+    width: 300, height: 75,
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: '#0D7C66',
-    padding: 10,
+    backgroundColor: '#789DBC',
+    marginTop: 25,
     borderRadius: 10,
     marginVertical: 10,
   },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+  setUpBtnText: {fontSize: 25, fontWeight: 'bold', textAlign: 'center', color: 'white'},
+
+
   modalContainer: {
-    flex: 1,
+    width: '100%', height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '100%',
-    height: '100%',
     padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#010101',
   },
-  modalText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: 'black',
-  },
-  closeButton: {
-    backgroundColor: '#0D7C66',
-    padding: 10,
-    borderRadius: 10,
-  },
-  closeButtonText: {
-    width: 50,
-    color: '#fff',
-    fontSize: 18,
-    textAlign: 'center',
-  },
-  image: {
-    marginBottom: 50,
-    marginTop: 50,
-  },
+  modalText: {marginBottom: 20, fontSize: 20, fontWeight: 'bold', color: 'white'},
+  modalBtn: {paddingVertical: 10, paddingHorizontal: 15, borderRadius: 10, backgroundColor: '#789DBC'},
+  modalBtnText: {width: 50, fontSize: 18, textAlign: 'center', color: 'white'},
+  image: {marginVertical: 50},
 });
 
 export default InitScreen;
