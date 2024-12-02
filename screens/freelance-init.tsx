@@ -5,6 +5,7 @@ import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
 
 const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [type] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, [navigation]);
 
   const handleWriteCard = async () => {
-    if (!firstName || !lastName || !email || !number || !bio) {
+    if (!type || !firstName || !lastName || !email || !number || !bio) {
       setError('Tutti i campi sono obbligatori');
       setModalMessage('Tutti i campi sono obbligatori');
       setIsActionModalVisible(true);
@@ -39,6 +40,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
 
       const cardData = {
+        type: 'Freelance',
         firstName,
         lastName,
         email,

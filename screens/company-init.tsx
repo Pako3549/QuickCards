@@ -5,6 +5,7 @@ import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
 
 const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [type] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [partitaIVA, setPartitaIVA] = useState('');
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, [navigation]);
 
   const handleWriteCard = async () => {
-    if (!companyName || !partitaIVA || !email || !number || !bio) {
+    if (!type || !companyName || !partitaIVA || !email || !number || !bio) {
       setError('Tutti i campi sono obbligatori');
       setModalMessage('Tutti i campi sono obbligatori');
       setIsActionModalVisible(true);
@@ -39,6 +40,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
 
       const cardData = {
+        type: 'Company',
         companyName,
         partitaIVA,
         email,
