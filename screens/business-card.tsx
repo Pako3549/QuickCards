@@ -120,34 +120,35 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
-        <BackArrow style={styles.arrow} width={25} height={25} />
-      </TouchableOpacity>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+<SafeAreaView style={styles.container}>
+  <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
+    <BackArrow style={styles.arrow} width={25} height={25} />
+  </TouchableOpacity>
+  <ScrollView contentInsetAdjustmentBehavior="automatic">
+    <View style={styles.main}>
+      <View style={styles.card}>
+        <View style={styles.pfp}>
 
-        <View style={styles.main}>
-
-          <View style={styles.card}>
-            <View style={styles.pfp}> <Text style={styles.pfpText}> { tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0) || ':D' } </Text> </View>
-            <Text style={styles.name}>{ tag ? (tag?.firstName + ' ' + tag?.lastName) : 'Name Surname' }</Text>
-            <Text style={styles.job}>Junior Developer and High School Student</Text>
-            <Text style={styles.email}>E-mail: { tag?.email || 'unset' }</Text>
-            <Text style={styles.phone}>Telephone Number: { tag?.number || 'unset' }</Text>
-          </View>
-
-          <View style={styles.linksContainer}>
-            <Text style={styles.linksTitle}> LINKS </Text>
-            <View style={styles.links}>
-              <TouchableOpacity style={styles.link} />
-              <TouchableOpacity style={styles.link} />
-              <TouchableOpacity style={styles.link} />
-            </View>
-          </View>
-
+          <Text style={styles.pfpText}>{tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0) || ':D'}</Text>
         </View>
+        <Text style={styles.name}>{tag ? (tag?.firstName + ' ' + tag?.lastName) : 'Name Surname'}</Text>
+        <Text style={styles.job}>Junior Developer and High School Student</Text>
+        <Text style={styles.email}>E-mail: {tag?.email || 'unset'}</Text>
+        <Text style={styles.phone}>Telephone Number: {tag?.number || 'unset'}</Text>
+      </View>
 
-      </ScrollView>
+      <View style={styles.linksContainer}>
+        <Text style={styles.linksTitle}> LINKS </Text>
+        <View style={styles.links}>
+          <TouchableOpacity style={styles.link} />
+          <TouchableOpacity style={styles.link} />
+          <TouchableOpacity style={styles.link} />
+        </View>
+      </View>
+
+    </View>
+
+  </ScrollView>
 
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
