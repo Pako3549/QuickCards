@@ -11,9 +11,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 type RootStackParamList = {
-  Home: undefined;
-  BusinessCard: undefined;
-  Init: undefined;
+  Home: undefined,
+  BusinessCard: undefined,
+  ChoiceInit: undefined,
+  FreelanceInit: undefined,
+  CompanyInit: undefined,
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -46,7 +48,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.buttonText}> Scan a business card </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => {NfcManager.cancelTechnologyRequest(); navigation.navigate('Init'); }}>
+      <TouchableOpacity style={styles.button} onPress={() => {NfcManager.cancelTechnologyRequest(); navigation.navigate('ChoiceInit'); }}>
         <Text style={styles.buttonText}> Set up your own business card </Text>
       </TouchableOpacity>
 

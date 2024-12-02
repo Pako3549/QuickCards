@@ -4,9 +4,9 @@ import NfcManager, { NfcTech, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
 
-const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [companyName, setCompanyName] = useState('');
+  const [partitaIVA, setPartitaIVA] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [bio, setBio] = useState('');
@@ -27,7 +27,7 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, [navigation]);
 
   const handleWriteCard = async () => {
-    if (!firstName || !lastName || !email || !number || !bio) {
+    if (!companyName || !partitaIVA || !email || !number || !bio) {
       setError('Tutti i campi sono obbligatori');
       setModalMessage('Tutti i campi sono obbligatori');
       setIsActionModalVisible(true);
@@ -39,8 +39,8 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
 
       const cardData = {
-        firstName,
-        lastName,
+        companyName,
+        partitaIVA,
         email,
         number,
         bio,
@@ -49,7 +49,7 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       const ndefMessage = Ndef.encodeMessage([Ndef.textRecord(JSON.stringify(cardData))]);
       await NfcManager.ndefHandler.writeNdefMessage(ndefMessage);
 
-      setModalMessage(`Carta inizializzata: ${cardData.firstName} ${cardData.lastName}`);
+      setModalMessage(`Carta inizializzata: ${cardData.companyName}`);
       setIsActionModalVisible(true);
     } catch (ex) {
       console.warn(ex);
@@ -69,10 +69,10 @@ const InitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <View style={styles.main}>
         {/* <Text style={styles.title}> Inizializza carta </Text> */}
         <View>
-          <TextInput style={styles.input} placeholder="Name" value={firstName} onChangeText={setFirstName} keyboardType="default" placeholderTextColor="#AAA" />
+          <TextInput style={styles.input} placeholder="Company Name" value={companyName} onChangeText={setCompanyName} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
-          <TextInput style={styles.input} placeholder="Surname" value={lastName} onChangeText={setLastName} keyboardType="default" placeholderTextColor="#AAA" />
+          <TextInput style={styles.input} placeholder="Partita IVA" value={partitaIVA} onChangeText={setPartitaIVA} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
           <TextInput style={styles.input} placeholder="E-mail" value={email} onChangeText={setEmail} keyboardType="default" placeholderTextColor="#AAA" />
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
   image: {marginVertical: 50},
 });
 
-export default InitScreen;
+export default CompanyInitScreen;

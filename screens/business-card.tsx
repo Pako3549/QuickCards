@@ -23,7 +23,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const navigateToInitScreen = () => {
     setIsActionModalVisible(false);
-    navigation.navigate('Init');
+    navigation.navigate('Choice');
   };
 
   const readTag = async () => {
