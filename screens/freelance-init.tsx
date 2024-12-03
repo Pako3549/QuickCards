@@ -5,9 +5,9 @@ import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
 
 const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [type] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [job, setJob] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [bio, setBio] = useState('');
@@ -28,7 +28,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, [navigation]);
 
   const handleWriteCard = async () => {
-    if (!type || !firstName || !lastName || !email || !number || !bio) {
+    if (!firstName || !lastName || !email || !number || !bio) {
       setError('Tutti i campi sono obbligatori');
       setModalMessage('Tutti i campi sono obbligatori');
       setIsActionModalVisible(true);
@@ -43,6 +43,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         type: 'Freelance',
         firstName,
         lastName,
+        job,
         email,
         number,
         bio,
@@ -75,6 +76,9 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         </View>
         <View>
           <TextInput style={styles.input} placeholder="Surname" value={lastName} onChangeText={setLastName} keyboardType="default" placeholderTextColor="#AAA" />
+        </View>
+        <View>
+          <TextInput style={styles.input} placeholder="Job" value={job} onChangeText={setJob} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
           <TextInput style={styles.input} placeholder="E-mail" value={email} onChangeText={setEmail} keyboardType="default" placeholderTextColor="#AAA" />

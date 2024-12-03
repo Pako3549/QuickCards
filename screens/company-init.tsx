@@ -5,7 +5,6 @@ import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
 
 const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [type] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [partitaIVA, setPartitaIVA] = useState('');
   const [email, setEmail] = useState('');
@@ -28,7 +27,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, [navigation]);
 
   const handleWriteCard = async () => {
-    if (!type || !companyName || !partitaIVA || !email || !number || !bio) {
+    if (!companyName || !partitaIVA || !email || !number || !bio) {
       setError('Tutti i campi sono obbligatori');
       setModalMessage('Tutti i campi sono obbligatori');
       setIsActionModalVisible(true);
@@ -106,7 +105,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalText}>{modalMessage}</Text>
-          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); navigation.navigate('Home');}}>
+          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); if(modalMessage.startsWith('Carta inizializzata:')){navigation.navigate('Home');}}}>
             <Text style={styles.modalBtnText}>OK</Text>
           </TouchableOpacity>
         </View>

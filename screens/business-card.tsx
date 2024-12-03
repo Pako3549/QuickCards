@@ -42,11 +42,18 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           throw new Error('Carta non inizializzata');
         }
 
-        if (!cardData.firstName || !cardData.lastName || !cardData.email || !cardData.number || !cardData.bio) {
-          throw new Error('Carta non inizializzata');
+        if (cardData.type === 'Freelance') {
+          if (!cardData.firstName || !cardData.lastName || !cardData.job || !cardData.email || !cardData.number || !cardData.bio) {
+            throw new Error('Carta non inizializzata');
+          }
+        } else if (cardData.type === 'Company') {
+          if (!cardData.companyName || !cardData.partitaIVA || !cardData.email || !cardData.number || !cardData.bio) {
+            throw new Error('Carta non inizializzata');
+          }
+        } else {
+          throw new Error('Tipo di carta non riconosciuto');
         }
 
-        // Gestisci i dati della carta come necessario
         setTag(cardData);
       } else {
         throw new Error('Carta non inizializzata');
@@ -79,7 +86,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (isScanning) {
-        return true; // Disattiva il pulsante "Indietro"
+        return true;
       } else {
         navigation.goBack();
         return true;
@@ -129,10 +136,10 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <View style={styles.card}>
         <View style={styles.pfp}>
 
-          <Text style={styles.pfpText}>{tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0) || ':D'}</Text>
+        {tag?.type === 'Freelance' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}
         </View>
-        <Text style={styles.name}>{tag ? (tag?.firstName + ' ' + tag?.lastName) : 'Name Surname'}</Text>
-        <Text style={styles.job}>Junior Developer and High School Student</Text>
+        <Text style={styles.name}>{tag?.type === 'Freelance' ? `${tag?.firstName} ${tag?.lastName}` : tag?.companyName || 'Name Surname'}</Text>
+        <Text style={styles.job}>{tag?.type === 'Freelance' ? tag?.job : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
         <Text style={styles.email}>E-mail: {tag?.email || 'unset'}</Text>
         <Text style={styles.phone}>Telephone Number: {tag?.number || 'unset'}</Text>
       </View>
