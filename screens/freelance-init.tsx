@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, BackHandler } from 'react-native';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Modal, BackHandler } from 'react-native';
 import NfcManager, { NfcTech, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
@@ -7,7 +7,8 @@ import BackArrow from '../assets/icons/chevron-grey.svg';
 const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [job, setJob] = useState('');
+  const [employement, setEmployement] = useState('');
+  const [placeOfEmployement, setPlaceOfEmployement] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [bio, setBio] = useState('');
@@ -43,7 +44,8 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         type: 'Freelance',
         firstName,
         lastName,
-        job,
+        employement,
+        placeOfEmployement,
         email,
         number,
         bio,
@@ -69,6 +71,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
         <BackArrow style={styles.arrow} width={25} height={25} />
       </TouchableOpacity>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
       <View style={styles.main}>
         {/* <Text style={styles.title}> Inizializza carta </Text> */}
         <View>
@@ -78,7 +81,10 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           <TextInput style={styles.input} placeholder="Surname" value={lastName} onChangeText={setLastName} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
-          <TextInput style={styles.input} placeholder="Job" value={job} onChangeText={setJob} keyboardType="default" placeholderTextColor="#AAA" />
+          <TextInput style={styles.input} placeholder="Employement" value={employement} onChangeText={setEmployement} keyboardType="default" placeholderTextColor="#AAA" />
+        </View>
+        <View>
+          <TextInput style={styles.input} placeholder="Place of employement" value={placeOfEmployement} onChangeText={setPlaceOfEmployement} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
         <View>
           <TextInput style={styles.input} placeholder="E-mail" value={email} onChangeText={setEmail} keyboardType="default" placeholderTextColor="#AAA" />
@@ -100,6 +106,8 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           <Text style={styles.setUpBtnText}> Set up </Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
+
 
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
@@ -110,7 +118,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalText}>{modalMessage}</Text>
-          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); navigation.navigate('Home');}}>
+          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); if(modalMessage.startsWith('Carta inizializzata:')){navigation.navigate('Home');}}}>
             <Text style={styles.modalBtnText}>OK</Text>
           </TouchableOpacity>
         </View>

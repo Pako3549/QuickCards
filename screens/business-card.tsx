@@ -43,7 +43,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         }
 
         if (cardData.type === 'Freelance') {
-          if (!cardData.firstName || !cardData.lastName || !cardData.job || !cardData.email || !cardData.number || !cardData.bio) {
+          if (!cardData.firstName || !cardData.lastName || !cardData.employement || !cardData.email || !cardData.number || !cardData.bio) {
             throw new Error('Carta non inizializzata');
           }
         } else if (cardData.type === 'Company') {
@@ -135,11 +135,11 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     <View style={styles.main}>
       <View style={styles.card}>
         <View style={styles.pfp}>
-
-        {tag?.type === 'Freelance' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}
+        <Text>{tag?.type === 'Freelance' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}</Text>
         </View>
         <Text style={styles.name}>{tag?.type === 'Freelance' ? `${tag?.firstName} ${tag?.lastName}` : tag?.companyName || 'Name Surname'}</Text>
-        <Text style={styles.job}>{tag?.type === 'Freelance' ? tag?.job : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
+        <Text style={styles.employement}>{tag?.type === 'Freelance' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
+        <Text style={styles.employement}>{tag?.type === 'Freelance' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
         <Text style={styles.email}>E-mail: {tag?.email || 'unset'}</Text>
         <Text style={styles.phone}>Telephone Number: {tag?.number || 'unset'}</Text>
       </View>
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   pfpText: {fontSize: 50, fontWeight: 'bold', textAlign: 'center', color: 'white'},
   name: {marginTop: 50, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
-  job: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
+  employement: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
   email: {fontSize: 17, textAlign: 'right', color: 'white'},
   phone: {fontSize: 17, textAlign: 'right', color: 'white'},
   linksContainer: {
