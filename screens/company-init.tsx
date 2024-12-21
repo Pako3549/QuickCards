@@ -13,6 +13,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [isActionModalVisible, setIsActionModalVisible] = useState(false);
+  const [linkFields, setLinkFields] = useState<string[]>([]);
   const [_error, setError] = useState('');
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, [navigation]);
 
   const handleWriteCard = async () => {
-    if (!companyName || !partitaIVA || !email || !number || !bio) {
+    if (!companyName || !partitaIVA || !email || !number ) {
       setError('Tutti i campi sono obbligatori');
       setModalMessage('Tutti i campi sono obbligatori');
       setIsActionModalVisible(true);
@@ -44,7 +45,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         partitaIVA,
         email,
         number,
-        bio,
+        links: linkFields,
       };
 
       const ndefMessage = Ndef.encodeMessage([Ndef.textRecord(JSON.stringify(cardData))]);
@@ -60,6 +61,18 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       NfcManager.cancelTechnologyRequest();
       setIsModalVisible(false);
     }
+  };
+
+  const addLinkField = () => {
+    if (linkFields.length < 3) {
+      setLinkFields([...linkFields, '']);
+    }
+  };
+
+  const updateLink = (index: number, value: string) => {
+    const newLinks = [...linkFields];
+    newLinks[index] = value;
+    setLinkFields(newLinks);
   };
 
   return (
@@ -87,9 +100,24 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
         <Text style={styles.linksTitle}> Links </Text>
 
-        <TextInput style={styles.input} placeholder="Link" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
-        <TextInput style={styles.input} placeholder="Link" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
-        <TextInput style={styles.input} placeholder="Link" value={bio} onChangeText={setBio} keyboardType="default" placeholderTextColor="#AAA" />
+        {linkFields.map((field, index) => (
+          <View key={index}>
+            <TextInput
+              style={styles.input}
+              placeholder={`Link ${index + 1}`}
+              value={field}
+              onChangeText={(value) => updateLink(index, value)}
+              keyboardType="default"
+              placeholderTextColor="#AAA"
+            />
+          </View>
+        ))}
+
+        {linkFields.length < 3 && (
+          <TouchableOpacity style={styles.addButton} onPress={addLinkField}>
+            <Text style={styles.addButtonText}>+</Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity style={styles.setUpBtn} onPress={handleWriteCard}>
           <Text style={styles.setUpBtnText}> Set up </Text>
@@ -138,6 +166,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#222',
   },
   icon: {position: 'absolute', top: 13, left: 13},
+
+  addButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#789DBC',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+
+  addButtonText: { fontSize: 30, color: 'white' },
 
   setUpBtn: {
     width: 300, height: 75,

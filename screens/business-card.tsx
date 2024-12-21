@@ -8,6 +8,7 @@ import {
   Text,
   StyleSheet,
   BackHandler,
+  Linking,
 } from 'react-native';
 import NfcManager, { NfcTech, NfcEvents, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
@@ -43,11 +44,11 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         }
 
         if (cardData.type === 'Freelance') {
-          if (!cardData.firstName || !cardData.lastName || !cardData.employement || !cardData.email || !cardData.number || !cardData.bio) {
+          if (!cardData.firstName || !cardData.lastName || !cardData.employement || !cardData.email || !cardData.number) {
             throw new Error('Carta non inizializzata');
           }
         } else if (cardData.type === 'Company') {
-          if (!cardData.companyName || !cardData.partitaIVA || !cardData.email || !cardData.number || !cardData.bio) {
+          if (!cardData.companyName || !cardData.partitaIVA || !cardData.email || !cardData.number) {
             throw new Error('Carta non inizializzata');
           }
         } else {
@@ -147,9 +148,9 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <View style={styles.linksContainer}>
         <Text style={styles.linksTitle}> LINKS </Text>
         <View style={styles.links}>
-          <TouchableOpacity style={styles.link} />
-          <TouchableOpacity style={styles.link} />
-          <TouchableOpacity style={styles.link} />
+            {tag?.links?.map((link: string, index: number) => (
+            <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(link)} />
+            ))}
         </View>
       </View>
 
