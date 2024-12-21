@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, BackHandler
 import NfcManager, { NfcTech, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
+import { fieldMap } from '../environments/global';
 
 const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [companyName, setCompanyName] = useState('');
@@ -40,12 +41,13 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
 
       const cardData = {
-        type: 'Company',
-        companyName,
-        partitaIVA,
-        email,
-        number,
-        links: linkFields,
+        [fieldMap.type]: '1',
+        [fieldMap.companyName]: companyName,
+        [fieldMap.partitaIVA]: partitaIVA,
+        [fieldMap.email]: email,
+        [fieldMap.number]: number,
+        [fieldMap.bio]: bio,
+        [fieldMap.links]: linkFields,
       };
 
       const ndefMessage = Ndef.encodeMessage([Ndef.textRecord(JSON.stringify(cardData))]);

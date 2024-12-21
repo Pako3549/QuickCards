@@ -13,6 +13,7 @@ import {
 import NfcManager, { NfcTech, NfcEvents, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
+import { fieldMap } from '../environments/global';
 
 const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [hasNfc, setHasNFC] = useState<boolean | null>(null);
@@ -39,15 +40,28 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         let cardData;
         try {
           cardData = JSON.parse(text);
+          cardData = {
+            type: cardData[fieldMap.type],
+            firstName: cardData[fieldMap.firstName],
+            lastName: cardData[fieldMap.lastName],
+            employement: cardData[fieldMap.employement],
+            placeOfEmployement: cardData[fieldMap.placeOfEmployement],
+            email: cardData[fieldMap.email],
+            number: cardData[fieldMap.number],
+            bio: cardData[fieldMap.bio],
+            links: cardData[fieldMap.links],
+            companyName: cardData[fieldMap.companyName],
+            partitaIVA: cardData[fieldMap.partitaIVA],
+          };
         } catch (e) {
           throw new Error('Carta non inizializzata');
         }
 
-        if (cardData.type === 'Freelance') {
+        if (cardData.type === '0') {
           if (!cardData.firstName || !cardData.lastName || !cardData.employement || !cardData.email || !cardData.number) {
             throw new Error('Carta non inizializzata');
           }
-        } else if (cardData.type === 'Company') {
+        } else if (cardData.type === '1') {
           if (!cardData.companyName || !cardData.partitaIVA || !cardData.email || !cardData.number) {
             throw new Error('Carta non inizializzata');
           }
@@ -136,11 +150,11 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     <View style={styles.main}>
       <View style={styles.card}>
         <View style={styles.pfp}>
-        <Text>{tag?.type === 'Freelance' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}</Text>
+        <Text>{tag?.type === '0' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}</Text>
         </View>
-        <Text style={styles.name}>{tag?.type === 'Freelance' ? `${tag?.firstName} ${tag?.lastName}` : tag?.companyName || 'Name Surname'}</Text>
-        <Text style={styles.employement}>{tag?.type === 'Freelance' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
-        <Text style={styles.employement}>{tag?.type === 'Freelance' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
+        <Text style={styles.name}>{tag?.type === '0' ? `${tag?.firstName} ${tag?.lastName}` : tag?.companyName || 'Name Surname'}</Text>
+        <Text style={styles.employement}>{tag?.type === '0' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
+        <Text style={styles.employement}>{tag?.type === '0' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
         <Text style={styles.email}>E-mail: {tag?.email || 'unset'}</Text>
         <Text style={styles.phone}>Telephone Number: {tag?.number || 'unset'}</Text>
       </View>
