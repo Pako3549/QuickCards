@@ -69,6 +69,11 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     }
   };
 
+  const removeLink = (index: number) => {
+    const newLinks = linkFields.filter((_, i) => i !== index);
+    setLinkFields(newLinks);
+  };
+
   const updateLink = (index: number, value: string) => {
     const newLinks = [...linkFields];
     newLinks[index] = value;
@@ -101,7 +106,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <Text style={styles.linksTitle}> Links </Text>
 
         {linkFields.map((field, index) => (
-          <View key={index}>
+          <View key={index} style={styles.linkContainer}>
             <TextInput
               style={styles.input}
               placeholder={`Link ${index + 1}`}
@@ -110,6 +115,9 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               keyboardType="default"
               placeholderTextColor="#AAA"
             />
+            <TouchableOpacity style={styles.removeButton} onPress={() => removeLink(index)}>
+              <Text style={styles.removeButtonText}>X</Text>
+            </TouchableOpacity>
           </View>
         ))}
 
@@ -166,6 +174,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#222',
   },
   icon: {position: 'absolute', top: 13, left: 13},
+
+  linkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+
+  removeButton: {
+    marginLeft: 10,
+    backgroundColor: '#FF0000',
+    borderRadius: 10,
+    padding: 10,
+  },
+
+  removeButtonText: { fontSize: 18, color: 'white' },
 
   addButton: {
     width: 50,

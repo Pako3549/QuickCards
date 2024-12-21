@@ -80,6 +80,11 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     setLinkFields(newLinks);
   };
 
+  const removeLink = (index: number) => {
+    const newLinks = linkFields.filter((_, i) => i !== index);
+    setLinkFields(newLinks);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
@@ -113,7 +118,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <Text style={styles.linksTitle}> Links </Text>
 
         {linkFields.map((field, index) => (
-          <View key={index}>
+          <View key={index} style={styles.linkContainer}>
             <TextInput
               style={styles.input}
               placeholder={`Link ${index + 1}`}
@@ -122,6 +127,9 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               keyboardType="default"
               placeholderTextColor="#AAA"
             />
+            <TouchableOpacity style={styles.removeButton} onPress={() => removeLink(index)}>
+              <Text style={styles.removeButtonText}>X</Text>
+            </TouchableOpacity>
           </View>
         ))}
 
@@ -181,6 +189,20 @@ const styles = StyleSheet.create({
   },
   icon: {position: 'absolute', top: 13, left: 13},
 
+  linkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+
+  removeButton: {
+    marginLeft: 10,
+    backgroundColor: '#FF0000',
+    borderRadius: 10,
+    padding: 10,
+  },
+
+  removeButtonText: { fontSize: 18, color: 'white' },
   addButton: {
     width: 50,
     height: 50,
