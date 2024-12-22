@@ -8,10 +8,12 @@ import {
   Text,
   StyleSheet,
   BackHandler,
+  Linking,
 } from 'react-native';
 import NfcManager, { NfcTech, NfcEvents, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
+import { fieldMap } from '../environments/global';
 
 const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [hasNfc, setHasNFC] = useState<boolean | null>(null);
@@ -23,7 +25,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const navigateToInitScreen = () => {
     setIsActionModalVisible(false);
-    navigation.navigate('Init');
+    navigation.navigate('Choice');
   };
 
   const readTag = async () => {
@@ -38,15 +40,35 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         let cardData;
         try {
           cardData = JSON.parse(text);
+          cardData = {
+            type: cardData[fieldMap.type],
+            firstName: cardData[fieldMap.firstName],
+            lastName: cardData[fieldMap.lastName],
+            employement: cardData[fieldMap.employement],
+            placeOfEmployement: cardData[fieldMap.placeOfEmployement],
+            email: cardData[fieldMap.email],
+            number: cardData[fieldMap.number],
+            bio: cardData[fieldMap.bio],
+            links: cardData[fieldMap.links],
+            companyName: cardData[fieldMap.companyName],
+            partitaIVA: cardData[fieldMap.partitaIVA],
+          };
         } catch (e) {
           throw new Error('Carta non inizializzata');
         }
 
-        if (!cardData.firstName || !cardData.lastName || !cardData.email || !cardData.number || !cardData.bio) {
-          throw new Error('Carta non inizializzata');
+        if (cardData.type === '0') {
+          if (!cardData.firstName || !cardData.lastName || !cardData.employement || !cardData.email || !cardData.number) {
+            throw new Error('Carta non inizializzata');
+          }
+        } else if (cardData.type === '1') {
+          if (!cardData.companyName || !cardData.partitaIVA || !cardData.email || !cardData.number) {
+            throw new Error('Carta non inizializzata');
+          }
+        } else {
+          throw new Error('Tipo di carta non riconosciuto');
         }
 
-        // Gestisci i dati della carta come necessario
         setTag(cardData);
       } else {
         throw new Error('Carta non inizializzata');
@@ -79,7 +101,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (isScanning) {
-        return true; // Disattiva il pulsante "Indietro"
+        return true;
       } else {
         navigation.goBack();
         return true;
@@ -120,34 +142,35 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
-        <BackArrow style={styles.arrow} width={25} height={25} />
-      </TouchableOpacity>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-
-        <View style={styles.main}>
-
-          <View style={styles.card}>
-            <View style={styles.pfp}> <Text style={styles.pfpText}> { tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0) || ':D' } </Text> </View>
-            <Text style={styles.name}>{ tag ? (tag?.firstName + ' ' + tag?.lastName) : 'Name Surname' }</Text>
-            <Text style={styles.job}>Junior Developer and High School Student</Text>
-            <Text style={styles.email}>E-mail: { tag?.email || 'unset' }</Text>
-            <Text style={styles.phone}>Telephone Number: { tag?.number || 'unset' }</Text>
-          </View>
-
-          <View style={styles.linksContainer}>
-            <Text style={styles.linksTitle}> LINKS </Text>
-            <View style={styles.links}>
-              <TouchableOpacity style={styles.link} />
-              <TouchableOpacity style={styles.link} />
-              <TouchableOpacity style={styles.link} />
-            </View>
-          </View>
-
+<SafeAreaView style={styles.container}>
+  <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
+    <BackArrow style={styles.arrow} width={25} height={25} />
+  </TouchableOpacity>
+  <ScrollView contentInsetAdjustmentBehavior="automatic">
+    <View style={styles.main}>
+      <View style={styles.card}>
+        <View style={styles.pfp}>
+        <Text>{tag?.type === '0' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}</Text>
         </View>
+        <Text style={styles.name}>{tag?.type === '0' ? `${tag?.firstName} ${tag?.lastName}` : tag?.companyName || 'Name Surname'}</Text>
+        <Text style={styles.employement}>{tag?.type === '0' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
+        <Text style={styles.employement}>{tag?.type === '0' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
+        <Text style={styles.email}>E-mail: {tag?.email || 'unset'}</Text>
+        <Text style={styles.phone}>Telephone Number: {tag?.number || 'unset'}</Text>
+      </View>
 
-      </ScrollView>
+      <View style={styles.linksContainer}>
+        <Text style={styles.linksTitle}> LINKS </Text>
+        <View style={styles.links}>
+            {tag?.links?.map((link: string, index: number) => (
+            <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(link)} />
+            ))}
+        </View>
+      </View>
+
+    </View>
+
+  </ScrollView>
 
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
@@ -204,7 +227,7 @@ const styles = StyleSheet.create({
   },
   pfpText: {fontSize: 50, fontWeight: 'bold', textAlign: 'center', color: 'white'},
   name: {marginTop: 50, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
-  job: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
+  employement: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
   email: {fontSize: 17, textAlign: 'right', color: 'white'},
   phone: {fontSize: 17, textAlign: 'right', color: 'white'},
   linksContainer: {
