@@ -91,7 +91,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <TouchableOpacity style={styles.header} onPress={() => navigation.navigate('Home')}>
         <BackArrow style={styles.arrow} width={25} height={25} />
       </TouchableOpacity>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView contentInsetAdjustmentBehavior="automatic" showsVerticalScrollIndicator={false}>
       <View style={styles.main}>
         {/* <Text style={styles.title}> Inizializza carta </Text> */}
         <View>
@@ -121,7 +121,7 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         {linkFields.map((field, index) => (
           <View key={index} style={styles.linkContainer}>
             <TextInput
-              style={styles.input}
+              style={[styles.input, styles.link]}
               placeholder={`Link ${index + 1}`}
               value={field}
               onChangeText={(value) => updateLink(index, value)}
@@ -129,14 +129,14 @@ const FreelanceInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               placeholderTextColor="#AAA"
             />
             <TouchableOpacity style={styles.removeButton} onPress={() => removeLink(index)}>
-              <Text style={styles.removeButtonText}>X</Text>
+              <Text style={styles.removeButtonText}>×</Text>
             </TouchableOpacity>
           </View>
         ))}
 
         {linkFields.length < 3 && (
-          <TouchableOpacity style={styles.addButton} onPress={addLinkField}>
-            <Text style={styles.addButtonText}>+</Text>
+          <TouchableOpacity style={styles.addLinkBtn} onPress={addLinkField}>
+            <Text style={styles.addLinkText}>+</Text>
           </TouchableOpacity>
         )}
 
@@ -188,22 +188,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: '#222',
   },
+  link: {width: 250},
   icon: {position: 'absolute', top: 13, left: 13},
 
   linkContainer: {
+    width: 300,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 12,
   },
 
   removeButton: {
-    marginLeft: 10,
-    backgroundColor: '#FF0000',
-    borderRadius: 10,
-    padding: 10,
+    width: 60, height: 50,
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent : 'center',
+    position: 'absolute',
+    top: 0, right: 0,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: '#222',
   },
-
-  removeButtonText: { fontSize: 18, color: 'white' },
+  removeButtonText: {fontSize: 25, color: 'white', textAlign: 'center'},
+  
   addButton: {
     width: 50,
     height: 50,
@@ -215,6 +222,14 @@ const styles = StyleSheet.create({
   },
 
   addButtonText: { fontSize: 30, color: 'white' },
+  addLinkBtn: {
+    width: 300, height: 50,
+    borderRadius: 10,
+    borderColor: '#222222',
+    borderWidth: 3,
+    borderStyle: 'dashed',
+  },
+  addLinkText: {color: '#222', fontSize: 37, textAlign: 'center'},
 
   setUpBtn: {
     width: 300, height: 75,
