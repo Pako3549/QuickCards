@@ -118,14 +118,14 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               placeholderTextColor="#AAA"
             />
             <TouchableOpacity style={styles.removeButton} onPress={() => removeLink(index)}>
-              <Text style={styles.removeButtonText}>X</Text>
+              <Text style={styles.removeButtonText}>x</Text>
             </TouchableOpacity>
           </View>
         ))}
 
         {linkFields.length < 3 && (
-          <TouchableOpacity style={styles.addButton} onPress={addLinkField}>
-            <Text style={styles.addButtonText}>+</Text>
+          <TouchableOpacity style={styles.addLinkBtn} onPress={addLinkField}>
+            <Text style={styles.addLinkText}>+</Text>
           </TouchableOpacity>
         )}
 
@@ -175,34 +175,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: '#222',
   },
+  link: {width: 250},
+
   icon: {position: 'absolute', top: 13, left: 13},
 
   linkContainer: {
+    width: 300,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 12,
   },
 
   removeButton: {
-    marginLeft: 10,
-    backgroundColor: '#FF0000',
+    width: 60, height: 50,
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent : 'center',
+    position: 'absolute',
+    top: 0, right: 0,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: '#222',
+  },
+  removeButtonText: {fontSize: 25, color: 'white', textAlign: 'center'},
+
+  addLinkBtn: {
+    width: 300, height: 50,
     borderRadius: 10,
-    padding: 10,
+    borderColor: '#222222',
+    borderWidth: 3,
+    borderStyle: 'dashed',
   },
-
-  removeButtonText: { fontSize: 18, color: 'white' },
-
-  addButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#789DBC',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-
-  addButtonText: { fontSize: 30, color: 'white' },
+  addLinkText: {color: '#222', fontSize: 37, textAlign: 'center'},
 
   setUpBtn: {
     width: 300, height: 75,
