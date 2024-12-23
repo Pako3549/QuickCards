@@ -14,6 +14,29 @@ import NfcManager, { NfcTech, NfcEvents, Ndef } from 'react-native-nfc-manager';
 import ScanCard from '../assets/scan-card.svg';
 import BackArrow from '../assets/icons/chevron-grey.svg';
 import { fieldMap } from '../environments/global';
+import FacebookIcon from '../assets/icons/social/facebook.svg';
+import GeneralIcon from '../assets/icons/social/general.svg';
+import GithubIcon from '../assets/icons/social/github.svg';
+import InstagramIcon from '../assets/icons/social/instagram.svg';
+import LinkedInIcon from '../assets/icons/social/linkedin.svg';
+import TelegramIcon from '../assets/icons/social/telegram.svg';
+import ThreadsIcon from '../assets/icons/social/threads.svg';
+import TikTokIcon from '../assets/icons/social/tiktok.svg';
+import WhatsappIcon from '../assets/icons/social/whatsapp.svg';
+import XIcon from '../assets/icons/social/x.svg';
+
+const linkToSvgMap: { [key: string]: any } = {
+  'https://facebook.com': FacebookIcon,
+  'https://github.com': GithubIcon,
+  'https://instagram.com': InstagramIcon,
+  'https://linkedin.com': LinkedInIcon,
+  'https://t.me': TelegramIcon,
+  'https://threads.net': ThreadsIcon,
+  'https://tiktok.com': TikTokIcon,
+  'https://wa.me': WhatsappIcon,
+  'https://x.com': XIcon,
+  'default': GeneralIcon,
+};
 
 const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [hasNfc, setHasNFC] = useState<boolean | null>(null);
@@ -162,9 +185,15 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <View style={styles.linksContainer}>
         <Text style={styles.linksTitle}> LINKS </Text>
         <View style={styles.links}>
-            {tag?.links?.map((link: string, index: number) => (
-            <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(link)} />
-            ))}
+          {tag?.links?.map((link: string, index: number) => {
+            const baseLink = link.split('/')[2];
+            const SvgIcon = linkToSvgMap[`https://${baseLink}`] || linkToSvgMap.default;
+            return (
+              <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(link)}>
+                {React.createElement(SvgIcon, { width: 50, height: 50 })}
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </View>
 
@@ -240,7 +269,7 @@ const styles = StyleSheet.create({
   },
   linksTitle: {fontSize: 25, fontWeight: 'bold', textAlign: 'center', color: 'white'},
   links: {flexDirection: 'row', flexWrap: 'wrap', marginTop: 25},
-  link: {width: 75, height: 75, margin: 12, borderRadius: '100%', backgroundColor: '#789DBC'},
+  link: {width: 75, height: 75, margin: 12, borderRadius: '100%'},
   modalContainer: {
     width: '100%', height: '100%',
     alignItems: 'center',
