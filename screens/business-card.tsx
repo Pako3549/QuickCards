@@ -26,15 +26,15 @@ import WhatsappIcon from '../assets/icons/social/whatsapp.svg';
 import XIcon from '../assets/icons/social/x.svg';
 
 const linkToSvgMap: { [key: string]: any } = {
-  'https://facebook.com': FacebookIcon,
-  'https://github.com': GithubIcon,
-  'https://instagram.com': InstagramIcon,
-  'https://linkedin.com': LinkedInIcon,
-  'https://t.me': TelegramIcon,
-  'https://threads.net': ThreadsIcon,
-  'https://tiktok.com': TikTokIcon,
-  'https://wa.me': WhatsappIcon,
-  'https://x.com': XIcon,
+  'facebook.com': FacebookIcon,
+  'github.com': GithubIcon,
+  'instagram.com': InstagramIcon,
+  'linkedin.com': LinkedInIcon,
+  't.me': TelegramIcon,
+  'threads.net': ThreadsIcon,
+  'tiktok.com': TikTokIcon,
+  'wa.me': WhatsappIcon,
+  'x.com': XIcon,
   'default': GeneralIcon,
 };
 
@@ -173,27 +173,31 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     <View style={styles.main}>
       <View style={styles.card}>
         <View style={styles.pfp}>
-        <Text>{tag?.type === '0' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}</Text>
+          <Text style={styles.pfpText}>{tag?.type === '0' ? (tag?.firstName?.charAt(0) + tag?.lastName?.charAt(0)) : (tag?.companyName?.charAt(0) + tag?.companyName?.charAt(1)) || ':D'}</Text>
         </View>
-        <Text style={styles.name}>{tag?.type === '0' ? `${tag?.firstName} ${tag?.lastName}` : tag?.companyName || 'Name Surname'}</Text>
-        <Text style={styles.employement}>{tag?.type === '0' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Junior Developer and High School Student'}</Text>
-        <Text style={styles.employement}>{tag?.type === '0' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
-        <Text style={styles.email}>E-mail: {tag?.email || 'unset'}</Text>
-        <Text style={styles.phone}>Telephone Number: {tag?.number || 'unset'}</Text>
+        <Text style={styles.name}>{tag?.type === '0' ? `${tag?.firstName.charAt(0).toUpperCase() + tag?.firstName.slice(1).toLowerCase()} ${tag?.lastName.charAt(0).toUpperCase() + tag?.lastName.slice(1).toLowerCase()}` : tag?.companyName || 'Name Surname'}</Text>
+        <Text style={styles.employement}>{tag?.type === '0' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Employment'}</Text>
+        <Text style={styles.info}>{tag?.type === '0' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
+        <Text style={styles.info}>E-mail: {tag?.email || 'unset'}</Text>
+        <Text style={styles.info}>Telephone Number: {tag?.number || 'unset'}</Text>
       </View>
 
+
       <View style={styles.linksContainer}>
-        <Text style={styles.linksTitle}> LINKS </Text>
+        <Text style={styles.linksTitle}> LINKS {tag?.link} </Text>
         <View style={styles.links}>
-          {tag?.links?.map((link: string, index: number) => {
-            const baseLink = link.split('/')[2];
-            const SvgIcon = linkToSvgMap[`https://${baseLink}`] || linkToSvgMap.default;
-            return (
-              <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(link)}>
-                {React.createElement(SvgIcon, { width: 50, height: 50 })}
-              </TouchableOpacity>
-            );
-          })}
+        {tag?.links?.map((link: string, index: number) => {
+          link = link.toLowerCase();
+          const normalizedLink = link.startsWith('http') ? link : `https://${link}`;
+          const baseLink = normalizedLink.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+          const SvgIcon = linkToSvgMap[baseLink] || linkToSvgMap.default;
+
+          return (
+            <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(normalizedLink)}>
+              {React.createElement(SvgIcon, { width: 50, height: 50 })}
+            </TouchableOpacity>
+          );
+        })}
         </View>
       </View>
 
@@ -254,22 +258,21 @@ const styles = StyleSheet.create({
     borderRadius: '100%',
     backgroundColor: '#789DBC',
   },
-  pfpText: {fontSize: 50, fontWeight: 'bold', textAlign: 'center', color: 'white'},
+  pfpText: {fontSize: 50, fontWeight: 'bold', textAlign: 'center', color: 'white', textTransform: 'uppercase'},
   name: {marginTop: 50, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
   employement: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
-  email: {fontSize: 17, textAlign: 'right', color: 'white'},
-  phone: {fontSize: 17, textAlign: 'right', color: 'white'},
+  info: {fontSize: 17, textAlign: 'right', color: 'white'},
   linksContainer: {
     width: 350,
     alignItems: 'center',
-    marginVertical: 25,
+    marginVertical: 50,
     padding: 25,
     borderRadius: 10,
     backgroundColor: '#222',
   },
   linksTitle: {fontSize: 25, fontWeight: 'bold', textAlign: 'center', color: 'white'},
-  links: {flexDirection: 'row', flexWrap: 'wrap', marginTop: 25},
-  link: {width: 75, height: 75, margin: 12, borderRadius: '100%'},
+  links: {flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 25},
+  link: {width: 50, height: 50, borderRadius: '100%'},
   modalContainer: {
     width: '100%', height: '100%',
     alignItems: 'center',
