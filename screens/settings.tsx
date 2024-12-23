@@ -34,7 +34,7 @@ const SettingsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           {'\n'}{'\n'}
           Unauthorized copying, distribution, modification, or any other use of the content provided on this application is strictly prohibited without prior written consent from QuickCards.
           {'\n'}{'\n'}
-          For permissions or any other inquiries, please contact us at the contacts below.
+          For permissions or any other inquiries, please reach out using the contact information provided below.
         </Text>
         <View style={styles.authorsContainer}>
           <Text style={styles.title}>Authors</Text>
@@ -63,12 +63,10 @@ const SettingsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#010101', padding: 20},
   header: {flexDirection: 'row', alignItems: 'center', marginTop: 40},
-  
   arrow: {position: 'absolute', left: 20, top: '50%', transform: [{ translateY: -5 }]},
   content: {flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginTop: 75},
   title: {fontSize: 30, fontWeight: 'bold', color: 'white', marginBottom: 20},
   text: {width: '90%', fontSize: 16, color: 'white', textAlign: 'center', marginBottom: 10},
-
   authorsContainer: {alignItems: 'center', marginTop: 100},
   authors: {flexDirection: 'row', gap: 50},
   author: {alignItems: 'center'},
