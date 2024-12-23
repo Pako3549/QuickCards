@@ -30,8 +30,8 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const handleWriteCard = async () => {
     if (!companyName || !partitaIVA || !email || !number ) {
-      setError('Tutti i campi sono obbligatori');
-      setModalMessage('Tutti i campi sono obbligatori');
+      setError('Fill in the required fields!');
+      setModalMessage('Fill in the required fields!');
       setIsActionModalVisible(true);
       return;
     }
@@ -53,11 +53,11 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       const ndefMessage = Ndef.encodeMessage([Ndef.textRecord(JSON.stringify(cardData))]);
       await NfcManager.ndefHandler.writeNdefMessage(ndefMessage);
 
-      setModalMessage(`Carta inizializzata: ${cardData.companyName}`);
+      setModalMessage(`Initialized business card: ${companyName}`);
       setIsActionModalVisible(true);
     } catch (ex) {
       console.warn(ex);
-      setModalMessage('Si è verificato un errore durante la scrittura della carta NFC');
+      setModalMessage('An error occurred while writing the NFC card');
       setIsActionModalVisible(true);
     } finally {
       NfcManager.cancelTechnologyRequest();
@@ -88,7 +88,6 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <BackArrow style={styles.arrow} width={25} height={25} />
       </TouchableOpacity>
       <View style={styles.main}>
-        {/* <Text style={styles.title}> Inizializza carta </Text> */}
         <View>
           <TextInput style={styles.input} placeholder="Company Name" value={companyName} onChangeText={setCompanyName} keyboardType="default" placeholderTextColor="#AAA" />
         </View>
@@ -143,7 +142,7 @@ const CompanyInitScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalText}>{modalMessage}</Text>
-          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); if(modalMessage.startsWith('Carta inizializzata:')){navigation.navigate('Home');}}}>
+          <TouchableOpacity style={styles.modalBtn} onPress={() => {setIsActionModalVisible(false); if(modalMessage.startsWith('Initialized business card:')){navigation.navigate('Home');}}}>
             <Text style={styles.modalBtnText}>OK</Text>
           </TouchableOpacity>
         </View>

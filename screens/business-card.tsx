@@ -77,31 +77,31 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             partitaIVA: cardData[fieldMap.partitaIVA],
           };
         } catch (e) {
-          throw new Error('Carta non inizializzata');
+          throw new Error('Card not initialized');
         }
 
         if (cardData.type === '0') {
           if (!cardData.firstName || !cardData.lastName || !cardData.employement || !cardData.email || !cardData.number) {
-            throw new Error('Carta non inizializzata');
+            throw new Error('Card not initialized');
           }
         } else if (cardData.type === '1') {
           if (!cardData.companyName || !cardData.partitaIVA || !cardData.email || !cardData.number) {
-            throw new Error('Carta non inizializzata');
+            throw new Error('Card not initialized');
           }
         } else {
-          throw new Error('Tipo di carta non riconosciuto');
+          throw new Error('Unrecognized card type');
         }
 
         setTag(cardData);
       } else {
-        throw new Error('Carta non inizializzata');
+        throw new Error('Card not initialized');
       }
     } catch (ex) {
       console.warn(ex);
-      if (ex instanceof Error && ex.message === 'Carta non inizializzata') {
-        setModalMessage('La carta non è ancora stata inizializzata');
+      if (ex instanceof Error && ex.message === 'Card not initialized') {
+        setModalMessage('The card has not been initialized yet');
       } else {
-        setModalMessage('Si è verificato un errore durante la lettura della carta NFC');
+        setModalMessage('An error occurred while reading the NFC card');
       }
       setIsActionModalVisible(true);
     } finally {
@@ -214,9 +214,9 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Modal animationType="slide" transparent={true} visible={isActionModalVisible} onRequestClose={() => setIsActionModalVisible(false)}>
       <View style={styles.modalContainer}>
         <Text style={styles.modalText}>{modalMessage}</Text>
-        {modalMessage === 'La carta non è ancora stata inizializzata' ? (
+        {modalMessage === 'The card has not been initialized yet' ? (
           <TouchableOpacity style={styles.modalBtn} onPress={navigateToInitScreen}>
-            <Text style={[styles.modalBtnText, styles.initializeBtn]}> Inizializza </Text>
+            <Text style={[styles.modalBtnText, styles.initializeBtn]}> Initialize </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.modalBtn} onPress={() => setIsActionModalVisible(false)}>
