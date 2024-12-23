@@ -183,23 +183,26 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       </View>
 
 
-      <View style={styles.linksContainer}>
-        <Text style={styles.linksTitle}> LINKS {tag?.link} </Text>
-        <View style={styles.links}>
-        {tag?.links?.map((link: string, index: number) => {
-          link = link.toLowerCase();
-          const normalizedLink = link.startsWith('http') ? link : `https://${link}`;
-          const baseLink = normalizedLink.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
-          const SvgIcon = linkToSvgMap[baseLink] || linkToSvgMap.default;
+      {tag?.links && tag?.links.length > 0 && (
+        <View style={styles.linksContainer}>
+          <Text style={styles.linksTitle}> LINKS {tag?.link} </Text>
+          <View style={styles.links}>
+            {tag?.links.map((link: string, index: number) => {
+              link = link.toLowerCase();
+              const normalizedLink = link.startsWith('http') ? link : `https://${link}`;
+              const baseLink = normalizedLink.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+              const SvgIcon = linkToSvgMap[baseLink] || linkToSvgMap.default;
 
-          return (
-            <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(normalizedLink)}>
-              {React.createElement(SvgIcon, { width: 50, height: 50 })}
-            </TouchableOpacity>
-          );
-        })}
+              return (
+                <TouchableOpacity key={index} style={styles.link} onPress={() => Linking.openURL(normalizedLink)}>
+                  {React.createElement(SvgIcon, { width: 50, height: 50 })}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
-      </View>
+      )}
+
 
     </View>
 
