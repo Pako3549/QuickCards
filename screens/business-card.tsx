@@ -151,7 +151,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   if (hasNfc === null) {
     return (
       <View style={styles.sectionContainer}>
-        <Text>Checking NFC support...</Text>
+        <Text style={styles.textWhite}>Checking NFC support...</Text>
       </View>
     );
   }
@@ -159,7 +159,7 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   if (!hasNfc) {
     return (
       <View style={styles.sectionContainer}>
-        <Text>NFC not supported</Text>
+        <Text style={styles.textWhite}>NFC not supported</Text>
       </View>
     );
   }
@@ -243,7 +243,8 @@ const styles = StyleSheet.create({
   },
   arrow: {position: 'absolute', left: 20, top: '50%', transform: [{ translateY: -5 }]},
   main: {height: '95%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingTop: 100},
-  sectionContainer: {marginTop: 30, marginHorizontal: 25},
+  sectionContainer: {marginTop: 30, marginHorizontal: 25, color: 'black'},
+  textWhite: {color: '#FFFFFF'},
   card: {
     width: 350,
     alignItems: 'flex-end',
