@@ -9,6 +9,7 @@ import {
 import NfcManager from 'react-native-nfc-manager';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import SettingsIcon from '../assets/icons/settings.svg';
 
 type RootStackParamList = {
   Home: undefined,
@@ -16,6 +17,7 @@ type RootStackParamList = {
   ChoiceInit: undefined,
   FreelanceInit: undefined,
   CompanyInit: undefined,
+  Settings: undefined,
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -42,6 +44,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
 
+      <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Settings')}>
+        <SettingsIcon width={25} height={25} />
+      </TouchableOpacity>
       <Text style={styles.title}> QuickCards </Text>
 
       <TouchableOpacity style={styles.button} onPress={() => { NfcManager.cancelTechnologyRequest(); navigation.navigate('BusinessCard'); }}>
@@ -69,6 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#222',
   },
   buttonText: {width: '75%', fontSize: 25, fontWeight: 'bold', textAlign: 'center', color: 'white'},
+  settingsButton: {position: 'absolute', top: 40, right: 20},
 });
 
 export default HomeScreen;

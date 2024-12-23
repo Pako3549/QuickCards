@@ -8,6 +8,7 @@ import ChoiceScreen from './screens/choice.tsx';
 import BusinessCardScreen from './screens/business-card.tsx';
 import FreelanceInitScreen from './screens/freelance-init.tsx';
 import CompanyInitScreen from './screens/company-init.tsx';
+import SettingsScreen from './screens/settings';
 
 enableScreens();
 
@@ -17,6 +18,7 @@ type RootStackParamList = {
   ChoiceInit: undefined,
   FreelanceInit: undefined,
   CompanyInit: undefined,
+  Settings: undefined,
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -30,6 +32,7 @@ const App = () => {
         <Stack.Screen name="ChoiceInit" component={ChoiceScreen} options={{ headerShown: false }} />
         <Stack.Screen name="FreelanceInit" component={FreelanceInitScreen} options={{ headerShown: false }} />
         <Stack.Screen name="CompanyInit" component={CompanyInitScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
