@@ -177,10 +177,12 @@ const BusinessCardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         </View>
         <Text style={styles.name}>{tag?.type === '0' ? `${tag?.firstName.charAt(0).toUpperCase() + tag?.firstName.slice(1).toLowerCase()} ${tag?.lastName.charAt(0).toUpperCase() + tag?.lastName.slice(1).toLowerCase()}` : tag?.companyName || 'Name Surname'}</Text>
         <Text style={styles.employement}>{tag?.type === '0' ? tag?.employement : `Partita IVA: ${tag?.partitaIVA}` || 'Employment'}</Text>
-        <Text style={styles.info}>{tag?.type === '0' ? `Place of employement: ${tag?.placeOfEmployement}` : ''}</Text>
+        {tag?.type === 0 && tag?.placeOfEmployement?.length > 0 && (<Text style={styles.info}>Place of employment: {tag.placeOfEmployement}</Text>)}
         <Text style={styles.info}>E-mail: {tag?.email || 'unset'}</Text>
         <Text style={styles.info}>Telephone Number: {tag?.number || 'unset'}</Text>
+        {tag?.type !== 0 && tag?.description?.length > 0 && (<Text style={styles.info}>Description: {tag.description}</Text>)}
       </View>
+      {tag?.type === '0' && tag?.bio.length > 0 && (<Text style={styles.bio}>{tag.bio}</Text>)}
 
 
       {tag?.links && tag?.links.length > 0 && (
@@ -266,6 +268,7 @@ const styles = StyleSheet.create({
   name: {marginTop: 50, fontSize: 30, fontWeight: 'bold', textAlign: 'right', color: 'white'},
   employement: {maxWidth: '75%', marginBottom: 25, fontSize: 17, textAlign: 'right', color: 'white'},
   info: {fontSize: 17, textAlign: 'right', color: 'white'},
+  bio: {color: 'white', marginTop: -5},
   linksContainer: {
     width: 350,
     alignItems: 'center',
