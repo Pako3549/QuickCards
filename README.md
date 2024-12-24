@@ -1,79 +1,39 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# QuickCards
 
-# Getting Started
+<div align="center">
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+![](https://img.shields.io/github/last-commit/Pako3549/QuickCards?&style=for-the-badge&color=8272a4&logoColor=D9E0EE&labelColor=292324)
+![](https://img.shields.io/github/stars/Pako3549/QuickCards?style=for-the-badge&logo=polestar&color=FFB1C8&logoColor=D9E0EE&labelColor=292324)
+![](https://img.shields.io/github/repo-size/Pako3549/QuickCards?color=CAC992&label=SIZE&logo=files&style=for-the-badge&logoColor=D9E0EE&labelColor=292324)
+[![](https://img.shields.io/github/v/release/Pako3549/QuickCards?color=CAC992&label=RELEASE&style=for-the-badge&logoColor=D9E0EE&labelColor=292324)](https://github.com/Pako3549/QuickCards/releases)
 
-## Step 1: Start the Metro Server
+</div>
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+QuickCards is a React Native application that allows users to create professional business cards that are written directly onto NFC tags. Whether you're representing a business or showcasing your personal brand, QuickCards simplifies designing and managing business cards, ensuring seamless sharing through NFC technology.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## 🚀 Features
+- **User-Friendly Interface**: Intuitive and responsive design for a seamless experience
+- **Two Types of Business Cards**: Create customized cards for companies or freelancers
+- **NFC Integration**: Write business card details directly onto an NFC tag for effortless sharing
+- **Enhanced Connectivity**: Include up to 3 links to social media profiles or other contact options, streamlining connections beyond traditional business cards
 
-```bash
-# using npm
-npm start
+## 📱 The App
+QuickCards leverages NFC tags to make sharing business or freelancer information more efficient. The app features two main sections: the first one is the Initialization, which is used to create personalized business cards and the second one allows users to scan NFC tags and retrieve detailed business card information.
 
-# OR using Yarn
-yarn start
-```
+### How it works
 
-## Step 2: Start your Application
+- **Initialization**:
+    - Choose to create a card for a company or as a freelancer
+    - Fill in the initialization fields (some mandatory, others optional)
+    - Once completed, initialize the card and hold an NFC tag close to write the data
+- **Card Display**:
+    - On the home screen click on the scanning section button
+    - Scan the NFC tag
+    - Instantly view business card details presented in an elegant and user-friendly format
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+## 🌐 Technologies Used
+- **React Native**: for building cross-platform mobile applications
+- **Metro**: for efficient bundling and development
 
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 📄 License
+This project is open-source and available under the GPL-3.0 License. See the [LICENSE](https://github.com/Pako3549/QuickCards/blob/main/LICENSE) file for more details.
