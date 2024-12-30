@@ -1,7 +1,8 @@
-# QuickCards
-
 <div align="center">
 
+![](android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png)
+
+# QuickCards
 ![](https://img.shields.io/github/last-commit/Pako3549/QuickCards?&style=for-the-badge&color=8272a4&logoColor=D9E0EE&labelColor=292324)
 ![](https://img.shields.io/github/stars/Pako3549/QuickCards?style=for-the-badge&logo=polestar&color=FFB1C8&logoColor=D9E0EE&labelColor=292324)
 ![](https://img.shields.io/github/repo-size/Pako3549/QuickCards?color=CAC992&label=SIZE&logo=files&style=for-the-badge&logoColor=D9E0EE&labelColor=292324)
